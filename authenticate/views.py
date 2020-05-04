@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from .forms import SignUpForm, EditProfileForm, EditPasswordForm
-from attendance import views
+
 
 def index(request):
     return render(request, 'authenticate/home.html')
@@ -16,7 +16,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             messages.success(request, ('You have been logged in!'))
-            return redirect(views.video_feed)
+            return redirect('attendance_index')
         else:
             messages.success(request, ('Error logging in - Please try again!'))
             return redirect('login')

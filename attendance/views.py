@@ -6,6 +6,8 @@ from django.views.decorators import gzip
 
 def index(request):
     return render(request, 'attendance/index.html')
+
+
 '''
 class VideoCamera(object):
     def __init__(self):
@@ -32,7 +34,7 @@ def video_feed(request):
         return StreamingHttpResponse(gen(VideoCamera()),content_type="multipart/x-mixed-replace;boundary=frame")
     except HttpResponseServerError as e:
         print("aborted")
-'''
+
 def stream():
     cap = cv2.VideoCapture(0) 
 
@@ -53,4 +55,4 @@ def stream():
 
 def video_feed(request):
     return StreamingHttpResponse(stream(), content_type='multipart/x-mixed-replace; boundary=frame')
-
+'''

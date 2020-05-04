@@ -1,16 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <h1>This is home page.</h1>
-
     {% if user.is_authenticated %}
-
-        <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
-        <p>Username: {{ user.username }}</p>
-        <p>Email: {{ user.email }}</p>
-        <h1>Video Streaming Django</h1>
-        <img src="{% url 'video-feed' %}" alt="">
+        <p class="text-center"> {{ user.last_name }} {{ user.first_name }} - {{ user.username }} - {{ user.email }} </p>
+        <h1 class="text-center" > Điểm danh </h1>
+        <div class="col-md-6 offset-md-3">
+            Content
+        </div>
     {% endif %}
-
 {% endblock %}

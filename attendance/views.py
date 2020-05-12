@@ -2,10 +2,16 @@ from django.shortcuts import render
 from django.http import StreamingHttpResponse
 import cv2
 from django.views.decorators import gzip
+from attendance.models import DEPT
 # Create your views here.
 
 def index(request):
-    return render(request, 'attendance/index.html')
+
+    context = {
+        'depts' : DEPT.objects.all()
+    }
+    return render(request, 'attendance/attendance.html', context=context)
+
 
 
 '''

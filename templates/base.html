@@ -40,7 +40,7 @@
                             <a class="btn btn-primary" href="{% url 'register' %}">Register</a>
                         </li>
                     </ul>
-
+                    
                     {% endif %}
             </nav>
         </div>
@@ -57,8 +57,7 @@
                     {% endfor %}
                 {% endif %}
 
-                {% block content %}
-                {% endblock %}
+                {% block content %} {% endblock %}
             </div>
         </div>
         <!-- Optional JavaScript -->

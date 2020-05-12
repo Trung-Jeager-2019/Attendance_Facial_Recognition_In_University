@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
+
+        <div class="col-md-6 offset-md-3">
+        
+        <form action="detect" method="POST">
+            {% csrf_token %}
+            <div>
+                <form method="get" action="">
+                    <div class="text-center">
+                        <caption>
+                            <h1 style="font-family: sans-serif; font-weight: bold;">
+                                Attendance
+                            </h1>
+                        </caption>
+                    </div>
+                    <label> Department </label>
+                            <input class="form-control course selectFilter" list="DEPT" name="DEPT" required placeholder="--Select Department--" id="Dept">
+                                <datalist id="DEPT">
+                                <!--
+                                    <option value="ECE">
+                                    <option value="MECH">
+                                    <option value="ISE">
+                                    <option value="CSE">
+                                    <option value="EEE">
+                                    <option value="AUTO">
+                                    <option value="CIVIL">
+                                -->
+                                    {% for dept in depts %}
+                                        <option value="{{dept}}"></option>
+                                    {% endfor %}
+                                </datalist>
+                            </br>
+                            <label> Semester </label>
+                            <input class="form-control course selectFilter" list="SEM" name="SEM" required placeholder="--Select Semester--" id="Sem">
+                                <datalist id="SEM">
+                                    <option value="1">
+                                    <option value="2">
+                                </datalist>
+                            </br>
+                            <input type="submit" class="btn" value="Take Attendance">
+                </form>
+            </div>
+        </form>
+        </div>
+    {% endif %}
+{% endblock %}

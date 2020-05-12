@@ -12,7 +12,12 @@ def index(request):
     }
     return render(request, 'attendance/attendance.html', context=context)
 
-
+def add_student(request):
+    
+    context = {
+        'depts' : DEPT.objects.all()
+    }
+    return render(request, 'attendance/add_student.html', context=context)
 
 '''
 class VideoCamera(object):

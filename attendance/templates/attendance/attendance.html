@@ -20,15 +20,6 @@
                     <label> Department </label>
                             <input class="form-control course selectFilter" list="DEPT" name="DEPT" required placeholder="--Select Department--" id="Dept">
                                 <datalist id="DEPT">
-                                <!--
-                                    <option value="ECE">
-                                    <option value="MECH">
-                                    <option value="ISE">
-                                    <option value="CSE">
-                                    <option value="EEE">
-                                    <option value="AUTO">
-                                    <option value="CIVIL">
-                                -->
                                     {% for dept in depts %}
                                         <option value="{{dept}}"></option>
                                     {% endfor %}
@@ -41,7 +32,8 @@
                                     <option value="2">
                                 </datalist>
                             </br>
-                            <input type="submit" class="btn" value="Take Attendance">
+                            <input class="btn btn-primary" type="submit" class="btn" value="Take Attendance">
+                            <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'attendance_add_student' %}" role="button"> Add Student </a>
                 </form>
             </div>
         </form>

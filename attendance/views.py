@@ -163,10 +163,12 @@ def detector(request):
                 cv2.rectangle(im,(x,y),(x+w,y+h),(225,0,0),2)
                 Id, conf = recognizer.predict(gray[y:y+h,x:x+w])  
                                                 
-                if(conf <68):
+                if(conf < 68):
                     ts = time.time()      
                     date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
+                    # print(date)
                     timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
+                    # print(timeStamp)
                     aa=df.loc[df['Id'] == Id]['Name'].values
                     tt=str(Id)+"-"+str(aa)
                     attendance.loc[len(attendance)] = [Id,str(aa[0]),date,timeStamp]
@@ -192,7 +194,7 @@ def detector(request):
 
         fileName_AttendanceFiles = "AttendanceFiles/"+dept+"/"+sem+"/"+"Attendance_"+date+"_"+Hour+"-"+Minute+"-"+Second+".csv"
 
-        attendance.to_csv(fileName_AttendanceFiles,index=False)
+        attendance.to_csv(fileName_AttendanceFiles, index=False)
         # file1=pd.read_csv(fileName)
 
         Id_Attendance = []
@@ -209,7 +211,7 @@ def detector(request):
             else:
                 Id_Attendance.append(cells[0])
                 # Xử lý lấy họ tên từ DB
-                Student = Student('', '')
+
                 FullName = Student.objects.filter(id_student=str(cells[0]))
                 Name_Attendance.append(FullName[0].full_name_student)
                 
@@ -222,20 +224,15 @@ def detector(request):
 
         table_attendance = list(zip(Id_Attendance, Name_Attendance, Date_Attendance, Time_Attendance))
         total_present = len(table_attendance)
-
+        # print(table_attendance[0])
         print("Student present: " + str(total_present))
 
 
         for student in table_attendance:
-
-            Student = Student(student[0], Student.objects.filter(id_student=student[0])[0].full_name_student)
-            Attendance.objects.create(
-                Student =  Student,
-                DEPT = dept,
-                SEM = sem,
-                date = student[2],
-                time = student[3],
-            )
+            id_student_attendance = student[0]
+            date_attendance = student[2]
+            time_attendance = student[3]
+            Attendance.objects.create(id_student = id_student_attendance, DEPT = dept, SEM = sem, date = date_attendance, time = time_attendance)
 
 
         fileName_StudentDetails = 'StudentDetails/'+dept+'/'+sem+'/'+'StudentDetails.csv'
@@ -277,10 +274,10 @@ def detector(request):
         Statistical_total_present = int((total_present/total_student)*100)
         Statistical_total_absent = int(100 - Statistical_total_present)
 
-        Students = Student.objects.filter(id_student='17050042')
+        # Students = Student.objects.filter(id_student='17050042')
 
-        for Stu in Students:
-            print(Stu.full_name_student)
+        # for Stu in Students:
+        #     print(Stu.full_name_student)
 
         context = {
             'Statistical_total_present': Statistical_total_present,
@@ -299,60 +296,30 @@ def detector(request):
         }
     return render(request,'attendance/result.html', context=context)
 
+def individual_details(request):
+    context = {
+            'ids': Student.objects.all(),
+            'depts': DEPT.objects.all(),
+            'sems': SEM.objects.all(),
+    }
+    return render(request,'attendance/individual_details.html', context=context)
+
 def individual(request):
     if request.method == 'POST':
 
-        id=request.POST['ID']
-        dept=request.POST['DEPT'].split(' ', 1)[0]
-        sem=request.POST['SEM'].split(' ', 1)[0]
-        
-        
-        DIR= "AttendanceFiles/"+dept+"/"+sem+"/"
-        len1= len([length for length in os.listdir(DIR) if os.path.isfile(os.path.join(DIR,length))])
-        
-        a=[]
-        a.append(glob.glob("Attendance/ISE/8/*.csv"))
+        id_student = request.POST['ID']
+        dept_name = request.POST['DEPT'].split(' ', 1)[0]
+        sem_name = request.POST['SEM'].split(' ', 1)[0]
+        date = request.POST['Date']
 
-        list=[]
-        list1=[]
-        count=0
-        print(len(a[0]))
-
-        df=pd.read_csv("StudentDetails/"+dept+"/"+sem+"/"+"StudentDetails.csv")
-        
-        for i in range(len(a[0])): 		
-            list.append(str(a[0][i]))
-        for j in range(0,len(list)):
-            a=pd.read_csv(list[j])
-            f=open(list[j],'rU')
-            for line in f:
-                cells=line.split(",")
-                list1.append(cells[0])
-        
-        print(list1)
-        aa=df.loc[df['Id'] == int(id)]['Name'].values
-        
-        for k in range(0,len(list1)):
-            if(list1[k]==id):
-                count+=1
-        
-        print("The student with  id: "+str(id)+" is present for "+ str(count) +" classes ")
-        
-        absent=len1-count
-        
         context = {
-            'depts': DEPT.objects.all(),
-            'sems': SEM.objects.all(),
-            'attended':count,
-            'Overall':len1,
-            'id':id,
-            'absent':absent,
-            'dept_name':dept,
-            'sem_name':sem,
-            'name':str(aa[0])
+            'id_student': id_student,
+            'dept_name': dept_name,
+            'sem_name': sem_name,
+            'date': date
         }
         
-    return render(request,'attendance/individual.html',context=context)
+    return render(request,'attendance/individual.html', context=context)
 
 
 # class VideoCamera(object):

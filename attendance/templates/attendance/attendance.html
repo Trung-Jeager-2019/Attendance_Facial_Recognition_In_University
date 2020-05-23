@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
+    <div class="container">
+        {% if user.is_authenticated %}
+            <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
 
-        <div class="col-md-6 offset-md-3">
-        
-        <form action="detect" method="POST">
-            {% csrf_token %}
-            <div>
-                <form method="get" action="">
+            <div class="col-md-6 offset-md-3">
+            
+            <form action="{% url 'attandance_detector' %}" method="post">
+                {% csrf_token %}
+                <div>
                     <div class="text-center">
                         <caption>
                             <h1 style="font-family: sans-serif; font-weight: bold;">
@@ -18,25 +18,26 @@
                         </caption>
                     </div>
                     <label> Department </label>
-                            <input class="form-control course selectFilter" list="DEPT" name="DEPT" required placeholder="--Select Department--" id="Dept">
-                                <datalist id="DEPT">
-                                    {% for dept in depts %}
-                                        <option value="{{dept}}"></option>
-                                    {% endfor %}
-                                </datalist>
-                            </br>
-                            <label> Semester </label>
-                            <input class="form-control course selectFilter" list="SEM" name="SEM" required placeholder="--Select Semester--" id="Sem">
-                                <datalist id="SEM">
-                                    <option value="1">
-                                    <option value="2">
-                                </datalist>
-                            </br>
-                            <input class="btn btn-primary" type="submit" class="btn" value="Take Attendance">
-                            <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'attendance_add_student' %}" role="button"> Add Student </a>
+                        <input class="form-control course selectFilter" list="DEPT" name="DEPT" required placeholder="--Select Department--" id="Dept">
+                            <datalist id="DEPT">
+                                {% for dept in depts %}
+                                    <option value="{{ dept }}"></option>
+                                {% endfor %}
+                            </datalist>
+                        </br>
+                        <label> Semester </label>
+                        <input class="form-control course selectFilter" list="SEM" name="SEM" required placeholder="--Select Semester--" id="Sem">
+                            <datalist id="SEM">
+                                {% for sem in sems %}
+                                    <option value="{{ sem }}"></option>
+                                {% endfor %}
+                            </datalist>
+                        </br>
+                        <input class="btn btn-primary" type="submit" class="btn" value="Take Attendance">
+                        <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'attendance_add_student' %}" role="button"> Add Student </a>
+                    </div>
                 </form>
             </div>
-        </form>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

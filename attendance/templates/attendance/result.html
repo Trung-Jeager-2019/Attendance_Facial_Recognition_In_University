@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-radius: 15px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #456aff;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script>
+        window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title:{
+                text: "State Operating Funds"
+            },
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: [
+                    { y: {{ Statistical_total_present }}, name: "Number of students present", exploded: true },
+                    { y: {{ Statistical_total_absent }}, name: "Number of students absent" },
+                ]
+            }]
+        });
+        chart.render();
+        }
+
+        function explodePie (e) {
+            if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
+
+        <div class="col-md-6 offset-md-3">
+        <div class="text-center">
+            <caption>
+                <h1 style="font-family: sans-serif; font-weight: bold;">
+                    Attendance results
+                </h1>
+            </caption>
+        </div>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <h2> {{ dept_name }} </h2>
+        <h2> {{ sem_name }} </h2>
+        <h2> {{ date }} </h2>
+        <h2 align="center">
+            Number of students who are present: {{ total_present }} <br/>
+            Number of students who are absent: {{ total_absent }} <br/>
+            Total number of students: {{ total_student }} <br/>
+            Total Number of Lesson Attendance : {{ length_lesson }}
+        </h2>
+        <table id="customers">
+            <tr>
+                <th>Id</th>
+                <th>Full Name</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+            {% for student_detail in table_attendance %}
+                <tr>
+                    {% for student in student_detail %}
+                        <td>{{ student }}</td>
+                    {% endfor %}
+                </tr>    
+            {% endfor %}
+        </table>
+
+        
+        {% comment %} <table id="customers">
+            {% for student_detail in table_attendance %}
+                <tr>
+                    {% for student in student_detail %}
+                        
+                        <th>{{ student }}</th>
+                        <th>{{ student[1] }}</th>
+                        <th>{{ student[2] }}</th>
+                        <th>{{ student[3] }}</th>
+                        
+                    {% endfor %}    
+                </tr>
+            {% endfor %}
+        </table> {% endcomment %}
+
+    {% endif %}
+    
+{% endblock %}

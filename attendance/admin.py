@@ -3,3 +3,6 @@ from .models import *
 # Register your models here.
 
 admin.site.register(DEPT)
+admin.site.register(SEM)
+admin.site.register(Student)
+admin.site.register(Attendance)

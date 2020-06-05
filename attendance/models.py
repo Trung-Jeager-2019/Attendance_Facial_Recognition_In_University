@@ -33,5 +33,7 @@ class Attendance(models.Model):
     date = models.DateField()
     time = models.TimeField()
 
+    
+    
     def __str__(self):
         return (str(self.id_student) + " - " + str(self.DEPT) + " - " + str(self.SEM) + " - " + str(self.date))

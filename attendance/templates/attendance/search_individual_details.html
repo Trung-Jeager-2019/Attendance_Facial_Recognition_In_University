@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
+
+        <div class="col-md-6 offset-md-3">
+        <div class="text-center">
+            <caption>
+                <h1 style="font-family: sans-serif; font-weight: bold;">
+                    Individual results
+                </h1>
+            </caption>
+        </div>
+        <h2> {{ id_student }} </h2>
+        <h2> {{ full_name }} </h2>
+        <h2> {{ dept_name }} </h2>
+
+    {% endif %}
+    
+{% endblock %}

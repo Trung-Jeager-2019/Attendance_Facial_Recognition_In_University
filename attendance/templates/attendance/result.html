@@ -39,9 +39,9 @@
         var chart = new CanvasJS.Chart("chartContainer", {
             exportEnabled: true,
             animationEnabled: true,
-            title:{
+            {% comment %} title:{
                 text: "State Operating Funds"
-            },
+            }, {% endcomment %}
             legend:{
                 cursor: "pointer",
                 itemclick: explodePie
@@ -74,59 +74,49 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
-
-        <div class="col-md-6 offset-md-3">
-        <div class="text-center">
-            <caption>
-                <h1 style="font-family: sans-serif; font-weight: bold;">
-                    Attendance results
-                </h1>
-            </caption>
+        <div class = "container">
+            <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
         </div>
-        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-        <h2> {{ dept_name }} </h2>
-        <h2> {{ sem_name }} </h2>
-        <h2> {{ date }} </h2>
-        <h2 align="center">
-            Number of students who are present: {{ total_present }} <br/>
-            Number of students who are absent: {{ total_absent }} <br/>
-            Total number of students: {{ total_student }} <br/>
-            Total Number of Lesson Attendance : {{ length_lesson }}
-        </h2>
-        <table id="customers">
-            <tr>
-                <th>No.</th>
-                <th>Student ID</th>
-                <th>Full Name</th>
-                <th>Date</th>
-                <th>Time</th>
-            </tr>
-            {% for student_detail in table_attendance %}
-                <tr>
-                    {% for student in student_detail %}
-                        <td>{{ student }}</td>
-                    {% endfor %}
-                </tr>    
-            {% endfor %}
-        </table>
+        <div class="col-md-6 offset-md-3">
+            
+            <div class="text-center">
+                <caption>
+                    <h2 style="font-family: sans-serif; font-weight: bold;">
+                        {{ dept_name }}
+                    </h2>
+                    <h4>
+                        {{ sem_name }} - {{ date }}
+                    </h4>
+                </caption>
+            </div>
 
-        
-        {% comment %} <table id="customers">
-            {% for student_detail in table_attendance %}
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            
+            <h2 align="center">
+                Number of students who are present: {{ total_present }} <br/>
+                Number of students who are absent: {{ total_absent }} <br/>
+                Total number of students: {{ total_student }} <br/>
+                Total Number of Lesson Attendance : {{ length_lesson }}
+            </h2>
+
+            <table id="customers">
                 <tr>
-                    {% for student in student_detail %}
-                        
-                        <th>{{ student }}</th>
-                        <th>{{ student[1] }}</th>
-                        <th>{{ student[2] }}</th>
-                        <th>{{ student[3] }}</th>
-                        
-                    {% endfor %}    
+                    <th>No.</th>
+                    <th>Student ID</th>
+                    <th>Full Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
                 </tr>
-            {% endfor %}
-        </table> {% endcomment %}
-
+                {% for student_detail in table_attendance %}
+                    <tr>
+                        {% for student in student_detail %}
+                            <td>{{ student }}</td>
+                        {% endfor %}
+                    </tr>    
+                {% endfor %}
+            </table>
+        </div>
     {% endif %}
     
 {% endblock %}

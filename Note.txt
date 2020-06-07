@@ -1,0 +1,7 @@
+- Giảng viên:
+    1. Thống kê điểm danh: Môn học, buổi, --> Chọn môn học, chọn buổi, chọn ngày (Phải biết tên môn)
+    2. Thêm sinh viên: Mssv, tên, môn, buổi
+    3. Điểm danh: Môn, buổi
+    
+- Sinh viên:
+    1. Thống kê điểm danh: Môn học -> Số buổi đi học/ Số buổi đã học -> In ra số buổi đã học

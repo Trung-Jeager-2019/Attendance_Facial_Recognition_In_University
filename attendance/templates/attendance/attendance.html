@@ -6,10 +6,9 @@
             <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
 
             <div class="col-md-6 offset-md-3">
-            
-            <form action="{% url 'attandance_detector' %}" method="post">
-                {% csrf_token %}
-                <div>
+                <form action="{% url 'attandance_detector' %}" method="post">
+                    {% csrf_token %}
+
                     <div class="text-center">
                         <caption>
                             <h1 style="font-family: sans-serif; font-weight: bold;">
@@ -17,25 +16,27 @@
                             </h1>
                         </caption>
                     </div>
-                    <label> Department </label>
-                        <input class="form-control course selectFilter" list="DEPT" name="DEPT" required placeholder="--Select Department--" id="Dept">
-                            <datalist id="DEPT">
-                                {% for dept in depts %}
-                                    <option value="{{ dept }}"></option>
-                                {% endfor %}
-                            </datalist>
-                        </br>
-                        <label> Semester </label>
-                        <input class="form-control course selectFilter" list="SEM" name="SEM" required placeholder="--Select Semester--" id="Sem">
-                            <datalist id="SEM">
-                                {% for sem in sems %}
-                                    <option value="{{ sem }}"></option>
-                                {% endfor %}
-                            </datalist>
-                        </br>
-                        <input class="btn btn-primary" type="submit" class="btn" value="Take Attendance">
-                        <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'attendance_add_student' %}" role="button"> Add Student </a>
-                    </div>
+                    </br>
+                    {% comment %} <label> Courses: </label> {% endcomment %}
+                    <input class="form-control course selectFilter" list="DEPT" name="DEPT" required placeholder="Select Courses" id="Dept">
+                        <datalist id="DEPT">
+                            {% for dept in depts %}
+                                <option value="{{ dept }}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </br>
+                    {% comment %} <label> Sessions: </label> {% endcomment %}
+                    <input class="form-control course selectFilter" list="SEM" name="SEM" required placeholder="Select Sessions" id="Sem">
+                        <datalist id="SEM">
+                            {% for sem in sems %}
+                                <option value="{{ sem }}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </br>
+                    
+                    <input class="btn btn-primary" type="submit" class="btn" value="Take Attendance"> 
+                    <a style="float: right; font-weight: bold; margin-left: 0.5em;" class="btn btn-light" href="{% url 'attendance_add_student' %}" role="button"> Add Student </a>
+                    <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'search_attendance' %}" role="button"> Search Attendance </a>
                 </form>
             </div>
         {% endif %}

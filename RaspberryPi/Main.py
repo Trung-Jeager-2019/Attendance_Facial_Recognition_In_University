@@ -25,10 +25,10 @@ def mainMenu():
     print(10 * "*", "WELCOME MENU", 10 * "*")
     print("[1] Check Camera")
     print("[2] Capture Faces")
-    # print("[3] Train Images")
-    print("[4] Recognize & Attendance")
-    print("[5] Auto Mail")
-    print("[6] Quit")
+    # print("[] Train Images")
+    print("[3] Recognize & Attendance")
+    # print("[] Auto Mail")
+    print("[4] Quit")
 
     while True:
         try:
@@ -43,14 +43,14 @@ def mainMenu():
             # elif choice == 3:
             #     Train_Image()
             #     break
-            elif choice == 4:
+            elif choice == 3:
                 Recognize_Attendence()
                 break
-            elif choice == 5:
-                os.system("py automail.py")
-                break
-                mainMenu()
-            elif choice == 6:
+            # elif choice == 5:
+            #     os.system("py automail.py")
+            #     break
+            #     mainMenu()
+            elif choice == 4:
                 print("Thank You")
                 break
             else:
@@ -77,9 +77,9 @@ def Capture_Image():
     Id = input("Enter Your Id: ")
     name = input("Enter Your Name: ")
     dept = input("Enter Your Department: ")
-    sem = input("Enter Your Semester: ")
+    # sem = input("Enter Your Semester: ")
 
-    takeImages(Id, name, dept, sem)
+    takeImages(Id, name, dept)
     key = input("Enter any key to return main menu")
     mainMenu()
 

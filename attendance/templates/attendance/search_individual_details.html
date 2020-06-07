@@ -1,5 +1,77 @@
 {% extends 'base.html' %}
 
+{% block style %}
+    <style>
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-radius: 15px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #456aff;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script>
+        window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            {% comment %} title:{
+                text: "State Operating Funds"
+            }, {% endcomment %}
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: [
+                    { y: {{ Statistical_total_present }}, name: "Number of present", exploded: true },
+                    { y: {{ Statistical_total_absent }}, name: "Number of absent"},
+                ]
+            }]
+        });
+        chart.render();
+        }
+
+        function explodePie (e) {
+            if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     {% if user.is_authenticated %}
         <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
@@ -8,13 +80,33 @@
         <div class="text-center">
             <caption>
                 <h1 style="font-family: sans-serif; font-weight: bold;">
-                    Individual results
+                    {{ dept_name }}
                 </h1>
             </caption>
         </div>
-        <h2> {{ id_student }} </h2>
-        <h2> {{ full_name }} </h2>
-        <h2> {{ dept_name }} </h2>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <h2 align="center">
+            Full name: {{ full_name }} <br/>
+            Number of Classes who are present: {{ total_present }} <br/>
+            Number of Classes who are absent: {{ total_absent }} <br/>
+            Total number of classes: {{ total_classes }} <br/>
+        </h2>
+        <table id="customers">
+            <tr>
+                <th>Roll No.</th>
+                <th>Grade Code</th>
+                <th>Sessions</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+            {% for attendance_detail in table_attendance %}
+                <tr>
+                    {% for attendance in attendance_detail %}
+                        <td>{{ attendance }}</td>
+                    {% endfor %}
+                </tr>    
+            {% endfor %}
+        </table>
 
     {% endif %}
     

@@ -45,6 +45,7 @@ def takeImages(Id, name, dept, sem):
 
     if isNumber(Id) and name.isalpha():
         if checkId(Id, dept, sem):
+
             cam = cv2.VideoCapture(0)
             harcascadePath = cv2.data.haarcascades + "../haarcascade_frontalface_default.xml"
             detector = cv2.CascadeClassifier(harcascadePath)
@@ -60,7 +61,8 @@ def takeImages(Id, name, dept, sem):
                     sampleNum += 1
                     #saving the captured face in the dataset folder TrainingImage
                     # cv2.imwrite("./TrainingImage" + os.sep + name + "." + Id + '.' + str(sampleNum) + ".jpg", gray[y:y+h, x:x+w])
-                    cv2.imwrite("../TrainingImage" + os.sep + dept + os.sep + sem + os.sep + name + "." + Id + '.' + str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
+                    for count in range(1, 4):
+                        cv2.imwrite("../TrainingImage" + os.sep + dept + os.sep + str(count) + os.sep + name + "." + Id + '.' + str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
                     #display the frame
                     cv2.imshow('frame', img)
                 #wait for 100 miliseconds
@@ -72,15 +74,16 @@ def takeImages(Id, name, dept, sem):
             cam.release()
             cv2.destroyAllWindows()
 
-            res = "Images Saved for ID : " + Id + " Name : " + name
+            # res = "Images Saved for ID : " + Id + " Name : " + name
             row = [Id, name]
 
-            with open('../StudentDetails'+ os.sep + dept + os.sep + sem + os.sep + 'StudentDetails.csv', 'a+') as csvFile:
-                writer = csv.writer(csvFile)
-                writer.writerow(row)
-            csvFile.close()
+            for count in range(1, 4):
+                with open('../StudentDetails'+ os.sep + dept + os.sep + str(count) + os.sep + 'StudentDetails.csv', 'a+') as csvFile:
+                    writer = csv.writer(csvFile)
+                    writer.writerow(row)
+                csvFile.close()
         else:
-            print("--> ID already exists - Please try again!")
+            print("--> " + Id + " already exists - Please try again!")
     else:
         if isNumber(Id):
             print("--> Enter Alphabetical Name!")

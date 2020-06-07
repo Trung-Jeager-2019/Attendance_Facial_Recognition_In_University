@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <div class="col-md-6 offset-md-3">
+        <div class="text-center">
+            <caption>
+                <h2 style="font-family: sans-serif; font-weight: bold;">
+                    {{ code_error }}
+                </h2>
+            </caption>
+        </div>
+        {% for text in text_error %}
+            <h2 align="center">
+                {{ text }}
+            </h2>
+        {% endfor %}
+        
+        <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'attendance_add_student' %}" role="button"> Try Again </a>
+        </br>
+    {% endif %}
+    
+{% endblock %}

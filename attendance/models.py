@@ -36,4 +36,4 @@ class Attendance(models.Model):
     
     
     def __str__(self):
-        return (str(self.id_student) + " - " + str(self.DEPT) + " - " + str(self.SEM) + " - " + str(self.date))
+        return (str(self.id_student) + " - " + str(self.DEPT) + " - " + str(self.SEM) + " - " + str(self.date)) + " - " + str(self.time)

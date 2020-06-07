@@ -6,47 +6,52 @@
             <h4 class="text-left"> Hello, {{ user.last_name }} {{ user.first_name }} </h4>
 
             <div class="col-md-6 offset-md-3">
-            <div class="text-center">
-                        <caption>
-                            <h1 style="font-family: sans-serif; font-weight: bold;">
-                                Search Attendance
-                            </h1>
-                        </caption>
-                    </div>
-            <form action="{% url 'search_attendance_details' %}" method="POST">
-                <table method="POST">
-                    {% csrf_token %}
-                    <tr>
-                        <label> Department: </label>
-                        <input class="form-control course selectFilter" list="DEPT" name="DEPT" required id="Dept" placeholder="--Select Department--">
-                        <datalist id="DEPT">
-                            {% for dept in depts %}
-                                <option value="{{ dept }}"></option>
-                            {% endfor %}
-                        </datalist>
-                    </tr>
-                    </br>
-                    <tr>
-                        <label> Semester: </label>
-                        <input class="form-control course selectFilter" list="SEM" name="SEM" required id="Sem"  placeholder="--Select Semester--">
-                        <datalist id="SEM">
-                            {% for sem in sems %}
-                                    <option value="{{ sem }}"></option>
+                <div class="text-center">
+                    <caption>
+                        <h1 style="font-family: sans-serif; font-weight: bold;">
+                            Search Attendance
+                        </h1>
+                    </caption>
+                </div>
+                </br>
+                <form action="{% url 'search_attendance_details' %}" method="POST">
+                    <table method="POST">
+                        {% csrf_token %}
+                        <tr>
+                            {% comment %} <label> Department: </label> {% endcomment %}
+                            <input class="form-control course selectFilter" list="DEPT" name="DEPT" required id="Dept" placeholder="Select Courses">
+                            <datalist id="DEPT">
+                                {% for dept in depts %}
+                                    <option value="{{ dept }}"></option>
                                 {% endfor %}
-                        </datalist>
-                    </tr>
-                    </br>
-                    <tr>
-                        <label> Date: </label>
-                        <input class="form-control course selectFilter" type="text" placeholder="--ex: 2020-05-26--" id="Date" name="date">
-                    </tr>
-                    </br>
-                    <tr>
-                        <input class="btn btn-primary" type="submit" value="Search" onclick="return alert1()">
-                        {% comment %} <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'attendance_index' %}" role="button"> Take Attendance </a> {% endcomment %}
-                    </tr>
-                </table>
-            </form>
+                            </datalist>
+                        </tr>
+                        </br>
+                        <tr>
+                            {% comment %} <label> Semester: </label> {% endcomment %}
+                            <input class="form-control course selectFilter" list="SEM" name="SEM" required id="Sem"  placeholder="Select Sessions">
+                            <datalist id="SEM">
+                                {% for sem in sems %}
+                                        <option value="{{ sem }}"></option>
+                                    {% endfor %}
+                            </datalist>
+                        </tr>
+                        </br>
+                        <tr>
+                            {% comment %} <label> Date: </label> {% endcomment %}
+                            <input class="form-control course selectFilter" type="text" placeholder="Enter date -> ex: 2020-05-26" id="Date" name="date">
+                        </tr>
+                        </br>
+                        <tr>
+                            <input class="btn btn-primary" type="submit" value="Search" onclick="return alert1()">
+                            <a style="float: right; font-weight: bold; margin-left: 0.5em;" class="btn btn-light" href="{% url 'attendance_index' %}" role="button"> Take Attendance </a>
+                            <a style="float: right; font-weight: bold; " class="btn btn-light" href="{% url 'attendance_add_student' %}" role="button"> Add Student </a>
+
+                            {% comment %} <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'attendance_index' %}" role="button"> Take Attendance </a> {% endcomment %}
+                        </tr>
+                    </table>
+                </form>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

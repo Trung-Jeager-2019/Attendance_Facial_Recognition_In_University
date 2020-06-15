@@ -65,7 +65,7 @@ def mainMenu():
 # calling the camera test function from check camera.py file
 
 def Check_Camera():
-    camer()
+    camera()
     key = input("Enter any key to return main menu")
     mainMenu()
 
@@ -79,7 +79,7 @@ def Capture_Image():
     dept = input("Enter Your Department: ")
     # sem = input("Enter Your Semester: ")
 
-    takeImages(Id, name, dept)
+    takeImages(Id, name, dept, str(1))
     key = input("Enter any key to return main menu")
     mainMenu()
 

@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Attendance_Facial_Recognition_In_University\pip_env"
+set "VIRTUAL_ENV=D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Decentralized_Attendance_Facial_Recognition_In_BDU\pip_env"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

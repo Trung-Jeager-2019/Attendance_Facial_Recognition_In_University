@@ -1,4 +1,4 @@
-#!D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Attendance_Facial_Recognition_In_University\pip_env\Scripts\python.exe
+#!D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Decentralized_Attendance_Facial_Recognition_In_BDU\pip_env\Scripts\python.exe
 from django.core import management
 
 if __name__ == "__main__":

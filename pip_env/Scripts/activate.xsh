@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Attendance_Facial_Recognition_In_University\pip_env"
+$VIRTUAL_ENV = r"D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Decentralized_Attendance_Facial_Recognition_In_BDU\pip_env"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

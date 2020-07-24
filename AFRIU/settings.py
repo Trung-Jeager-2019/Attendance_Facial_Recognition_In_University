@@ -20,10 +20,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qlakys=koi!otm_wy^3c-ax9hfw7kc!v(!xt*=$-*a+%q4ooku'
+SECRET_KEY = 'il7=vwy8k7)(uux_a8lv%y5#*9hih@wcw1f8qw7cm1$1h30t^m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# CONTACT EMAIL:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'grteam.tht131417@gmail.com'
+EMAIL_HOST_PASSWORD = 'groupsteam131417'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,8 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authenticate.apps.AuthenticateConfig',
-    'attendance'
+    'attendance',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -56,9 +65,7 @@ ROOT_URLCONF = 'AFRIU.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, "templates")
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,4 +128,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+
+AUTH_USER_MODEL = 'attendance.User'
+
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGOUT_REDIRECT_URL = 'home'
+
+# Messages built-in framework
+
+# Third party apps configuration
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

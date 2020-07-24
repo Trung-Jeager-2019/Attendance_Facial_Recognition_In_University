@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title> Thêm sinh viên </title>
+{% endblock %}
+
+{% block herosection %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section-second set-bg" data-setbg="{% static 'img/breadcrumb/mountains_snow_summit.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Thêm sinh viên</h2>
+                        <div class="breadcrumb-option">
+                            <a href="{% url 'teachers:attendance_index' %}"><i class="fa fa-home"></i> Trang chủ</a>
+                            <span> Thêm sinh viên </span>
+                        </div>
+                        <br>
+                        {% if user.is_authenticated %}
+                            <h4 class="text-center" style="color:white"> Xin chào, {{ user.first_name }} </h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+{% endblock herosection %}
+
+{% block content %}
+    <!-- Login Section Begin -->
+    <section class="register-section classes-page spad">
+        <div class="container">
+            <div class="classes-page-text">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="register-text">
+                            <form action="{% url 'teachers:dataset_creator' %}" method="post">
+                                {% csrf_token %}
+                                <select class="form-control course selectFilter" id="Id" required="" name="ID">
+                                    <option>-- Sinh viên --</option>
+                                    {% for id in ids %}
+                                        <option value="{{ id }}">{{ id }}</option>
+                                    {% endfor %}
+                                </select>
+                                </br>
+                                <select class="form-control course selectFilter" id="Dept" required="" name="DEPT">
+                                    <option>-- Môn học --</option>
+                                    {% for dept in depts %}
+                                        <option value="{{ dept }}">{{ dept }}</option>
+                                    {% endfor %}
+                                </select>
+                                </br>
+                                <input class="btn btn-danger" type="submit" class="btn" value="Thêm sinh viên">
+                                <a style="float: right; font-weight: bold; margin-left: 0.5em;" class="btn btn-light" href="{% url 'teachers:attendance_index' %}" role="button"> Điểm danh </a>
+                                <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'teachers:search_attendance' %}" role="button"> Tìm kiếm điểm danh </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Login Section End -->
+
+    {% comment %} <div class="container">
+        {% if user.is_authenticated %}
+            <h4 class="text-left"> Xin chào, {{ user.first_name }} </h4>
+
+            <div class="col-md-6 offset-md-3">
+            <div class="text-center">
+                <caption>
+                    <h1 style="font-family: sans-serif; font-weight: bold;">
+                        Thêm sinh viên
+                    </h1>
+                </caption>
+            </div>
+            </br>
+            <form action="{% url 'teachers:dataset_creator' %}" method="POST">
+                <table method="POST">
+                    {% csrf_token %}
+                    <tr>
+                        <select class="form-control course selectFilter" id="Id" required="" name="ID">
+                            <option>-- Sinh viên --</option>
+                            {% for id in ids %}
+                                <option value="{{ id }}">{{ id }}</option>
+                            {% endfor %}
+                        </select>
+                    </tr>
+                    </br>
+                    <tr>
+                        <select class="form-control course selectFilter" id="Dept" required="" name="DEPT">
+                            <option>-- Môn học --</option>
+                            {% for dept in depts %}
+                                <option value="{{ dept }}">{{ dept }}</option>
+                            {% endfor %}
+                        </select>
+                    </tr>
+                    </br>
+                    <tr>
+                        <input class="btn btn-primary" type="submit" value="Thêm sinh viên" onclick="return alert1()">
+                        <a style="float: right; font-weight: bold; margin-left: 0.5em;" class="btn btn-light" href="{% url 'teachers:attendance_index' %}" role="button"> Điểm danh </a>
+                        <a style="float: right; font-weight: bold; " class="btn btn-light" href="{% url 'teachers:search_attendance' %}" role="button"> Tìm kiếm điểm danh </a>
+                    </tr>
+                </table>
+            </form>
+        {% endif %}
+    </div> {% endcomment %}
+{% endblock %}

@@ -57,7 +57,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV 'D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Attendance_Facial_Recognition_In_University\pip_env'
+set -gx VIRTUAL_ENV 'D:\Documents\Study_in_University\Third_year\HKII\Industry_Project\Decentralized_Attendance_Facial_Recognition_In_BDU\pip_env'
 
 # https://github.com/fish-shell/fish-shell/issues/436 altered PATH handling
 if test (echo $FISH_VERSION | head -c 1) -lt 3

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title> Lỗi </title>
+{% endblock %}
+
+{% block herosection %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section-second set-bg" data-setbg="{% static 'img/breadcrumb/mountains_snow_summit.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Tìm kiếm điểm danh</h2>
+                        <div class="breadcrumb-option">
+                            <a href="{% url 'teachers:attendance_index' %}"><i class="fa fa-home"></i> Trang chủ</a>
+                            <span> Tìm kiếm điểm danh </span>
+                        </div>
+                        <br>
+                        {% if user.is_authenticated %}
+                            <h4 class="text-center" style="color:white"> Xin chào, {{ user.first_name }} </h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+{% endblock herosection %}
+
+{% block content %}
+    <!-- Error Section Begin -->
+    <section class="gym-award spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="award-text">
+                        <h2>{{ code_error }}</h2>
+                        {% for text in text_error %}
+                            <p>{{ text }}</p>
+                        {% endfor %}
+                        </br>
+                        <a style="float: left; font-weight: bold;" class="btn btn-danger" href="{% url 'teachers:search_attendance' %}" role="button"> Thử lại </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <img src="{% static 'img/404-error.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Error Section End -->
+    {% comment %} {% if user.is_authenticated %}
+
+        <div class="col-md-6 offset-md-3">
+        <div class="text-center">
+            <caption>
+                <h2 style="font-family: sans-serif; font-weight: bold;">
+                    {{ code_error }}
+                </h2>
+            </caption>
+        </div>
+        {% for text in text_error %}
+            <h2 align="center">
+                {{ text }}
+            </h2>
+        {% endfor %}
+        
+        <a style="float: right; font-weight: bold;" class="btn btn-light" href="{% url 'teachers:search_attendance' %}" role="button"> Try Again </a>
+        </br>
+    {% endif %} {% endcomment %}
+    
+{% endblock %}

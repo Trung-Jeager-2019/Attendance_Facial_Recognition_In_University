@@ -1,107 +1,160 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        <title> AFRIU </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" type="image/png" href="{% static 'images/logo_oX5_icon.ico'%}"/>
         
+        {% block title %}{% endblock %}
 
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+
+        <!--block-->
         {% block style %}{% endblock %}
-
-        {% block script %}{% endblock %}
-
+        {% block scripts %}{% endblock %}
+        {% block js %} {% endblock %} 
     </head>
-
     <body>
-        <div class="container">
-            <nav class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-                {% if user.is_authenticated %}
-                    <a class="navbar-brand" href="{% url 'attendance_index' %}">
-                        <img class="d-inline-block align-top" src="{% static 'images/icon_attendance.png' %}" width="30" height="30">
-                        <strong> Attendance Facial Recognition In University </strong>
-                    </a>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
-                            <a class="btn btn-outline-primary" href="{% url 'edit_profile' %}">Edit Profile</a>
-                            <a class="btn btn-outline-primary" href="{% url 'change_password' %}">Change Password</a>
-                        </li>
-                    </ul>
-                    {% else %}
-                    <a class="navbar-brand" href="{% url 'home' %}">
-                        <img class="d-inline-block align-top" src="{% static 'images/icon_attendance.png' %}" width="30" height="30">
-                        <strong> Attendance Facial Recognition In University </strong>
-                    </a>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
-                            <a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a>
-                        </li>
-                    </ul>
-                    
-                    {% endif %}
-            </nav>
+        <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
         </div>
+
+        <!-- Header Section Begin -->
+        <header class="header-section">
             <div class="container">
-                <br/>
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-warning alert-dismissable" role="alert">
-                            <button class="close" data-dismiss="alert">
-                                <small><sup>x</sup></small>
-                            </button>
-                            {{ message }}
+                {% if user.is_authenticated %}
+                    {% if user.is_teacher %}
+                        <a class="navbar-brand" href="{% url 'teachers:attendance_index' %}">
+                            <img class="d-inline-block align-top" src="{% static 'images/logo.png' %}" width="65" height="65">
+                        </a>
+                        <div class="nav-menu">
+                            <nav class="mainmenu mobile-menu">
+                                <ul>
+                                    <li><a href="{% url 'teachers:attendance_index' %}">Trang chủ</a></li>
+                                    <li><a href="{% url 'contact_us' %}">Liên hệ</a></li>
+                                    <li><a href="{% url 'edit_profile' %}">Cập nhật thông tin</a></li>
+                                    <li><a href="{% url 'change_password' %}">Đổi mật khẩu</a></li>
+                                </ul>
+                            </nav>
+                            <a href="{% url 'logout' %}" class="primary-btn signup-btn">Đăng xuất</a>
                         </div>
-                    {% endfor %}
+                    {% else %}
+                        <a class="navbar-brand" href="{% url 'students:search_individual' %}">
+                            <img class="d-inline-block align-top" src="{% static 'images/logo.png' %}" width="65" height="65">
+                        </a>
+                        <div class="nav-menu">
+                            <nav class="mainmenu mobile-menu">
+                                <ul>
+                                    <li><a href="{% url 'students:search_individual' %}">Trang chủ</a></li>
+                                    <li><a href="{% url 'contact_us' %}">Liên hệ</a></li>
+                                    <li><a href="{% url 'edit_profile' %}">Cập nhật thông tin</a></li>
+                                    <li><a href="{% url 'change_password' %}">Đổi mật khẩu</a></li>
+                                </ul>
+                            </nav>
+                            <a href="{% url 'logout' %}" class="primary-btn signup-btn">Đăng xuất</a>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <a class="navbar-brand" href="{% url 'home' %}">
+                        <img class="d-inline-block align-top" src="{% static 'images/logo.png' %}" width="65" height="65">
+                        {% comment %} <strong>Hệ thống nhận dạng và điểm danh khuôn mặt - BDU</strong> {% endcomment %}
+                    </a>
+                    <div class="nav-menu">
+                        <a class="primary-btn signup-btn" href="{% url 'login' %}">Đăng nhập</a>
+                        <a class="primary-btn signup-btn" href="{% url 'select_signup_view' %}">Đăng kí</a>
+                    </div>
                 {% endif %}
-                
+                <div id="mobile-menu-wrap"></div>
             </div>
-            {% block content %} {% endblock %}
+        </header>
+        <!-- Header End -->
+        
+        {% block herosection %}{% endblock herosection %}
+
+        <div class="container">
+            <br/>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning alert-dismissable" role="alert">
+                        <button class="close" data-dismiss="alert">
+                            <small><sup>x</sup></small>
+                        </button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
+        {% block content %} {% endblock %}
+
         <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'js/mixitup.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
-    <footer class="container pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">© 2020-2021</small>
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="contact-option">
+                        <span> Điện thoại </span>
+                        <p>0274 3 833 927</p>
+                        <span>Địa chỉ</span>
+                        <p>Số 504 Đại lộ Bình Dương, P. Hiệp Thành,<br> Tp. Thủ Dầu Một, Bình Dương</p>
+                        <span>Email</span>
+                        <p>fit@bdu.edu.vn</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-option">
+                        <span>Liên kết website</span>
+                        <a target="_blank" href="http://bdu.edu.vn/"><p> Đại học Bình Dương </p></a>
+                        <a target="_blank" href="https://tuyensinh.bdu.edu.vn/"><p> Thông tin tuyển sinh </p></a>
+                        <a target="_blank" href="https://daotao.bdu.edu.vn/"><p> Phòng Đào tạo </p></a>
+                        <a target="_blank" href="https://sv.bdu.edu.vn/"><p> Cổng thông tin sinh viên </p></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-option">
+                        <span>Nhóm phát triển</span>
+                        <a href="{% url 'about_Teams' %}"><p> Về chúng tôi </p></a>
+                    </div>
+                </div>
             </div>
-            <div class="col-6 col-md">
-                <h5>Features</h5>
-                <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">Cool stuff</a></li>
+            
+            <div class="copyright-text">
+                <ul>
+                    <li><a href="#">Term&Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
                 </ul>
+                <p>&copy;<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Khoa CNTT, Robot & TTNT - Đại Học Bình Dương</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></p>
+                <div class="footer-social">
+                    <a target="_blank" href="https://www.facebook.com/fit.bdu.edu/"><i class="fa fa-facebook"></i></a>
+                    <a target="_blank" href="https://plus.google.com/u/0/113275856680875052928"><i class="fa fa-google-plus-circle"></i></a>
+                    <a target="_blank" href="https://www.instagram.com/binhduonguniversity/"><i class="fa fa-instagram"></i></a>
+                    <a target="_blank" href="https://www.youtube.com/channel/UCr1oBFKkIOUoKcG5CQ2oxBQ"><i class="fa fa-youtube"></i></a>
+                </div>
             </div>
-            <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">Resource</a></li>
-                <li><a class="text-muted" href="#">Resource name</a></li>
-                <li><a class="text-muted" href="#">Another resource</a></li>
-                <li><a class="text-muted" href="#">Final resource</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">Team</a></li>
-                <li><a class="text-muted" href="#">Locations</a></li>
-                <li><a class="text-muted" href="#">Privacy</a></li>
-                <li><a class="text-muted" href="#">Terms</a></li>
-                </ul>
-            </div>
-            </div>
+        </div>
     </footer>
+    <!-- Footer Section End -->
 </html>

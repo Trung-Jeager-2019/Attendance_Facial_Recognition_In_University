@@ -5,9 +5,32 @@
     
 - Sinh viên:
     1. Thống kê điểm danh: Môn học -> Số buổi đi học/ Số buổi đã học -> In ra số buổi đã học
-
+    - Tải lên tất cả buổi học - số đã học
+    - Tải lên buổi đi học - số đi học
 
 - Raspberry Pi 3:
     1. Lấy ảnh khuôn mặt.
     2. Nhận diện - .csv - đưa dữ liệu điểm danh vào database.
     3. Kiểm tra camera
+
+- Xóa sinh viên
+- Trang Home
+- Logo
+- Liên kết dữ liệu
+- Raspberry Pi xử lý
+
+- Tài khoản:
+    1. Đăng kí thiếu email
+    2. Phân quyền người dùng -> Tài khoản sinh viên
+                                - firstname
+                                - lastname
+                                - username
+                                - email
+                                - password
+                             -> Thông tin sinh viên
+                                - ID - username
+                                - firstname
+                                - lastname
+                                
+    3. Phân quyền người dùng -> Tài khoản giảng viên
+                             -> Thông tin giảng viên

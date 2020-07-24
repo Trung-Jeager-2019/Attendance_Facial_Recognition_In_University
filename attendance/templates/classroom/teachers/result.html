@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title> Kết quả điểm danh </title>
+{% endblock %}
+
+{% comment %} {% block js %}
+    <script>
+        window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            {% comment %} title:{
+                text: "State Operating Funds"
+            }, {% endcomment %
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: [
+                    { y: {{ Statistical_total_present }}, name: "Tỉ lệ đã đi học", exploded: true },
+                    { y: {{ Statistical_total_absent }}, name: "Tỉ lệ đã vắng học" },
+                ]
+            }]
+        });
+        chart.render();
+        }
+
+        function explodePie (e) {
+            if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    </script>
+{% endblock %} {% endcomment %}
+
+{% block herosection %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section-second set-bg" data-setbg="{% static 'img/breadcrumb/mountains_snow_summit.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>{{ dept_name }}</h2>
+                        <div class="breadcrumb-option" style="color:white">
+                            {% comment %} <a href="{% url 'teachers:attendance_index' %}"><i class="fa fa-home"></i> Trang chủ</a>
+                            <span> Điểm danh lớp học </span> {% endcomment %}
+                            <h4 style="color:white"> {{ sem_name }} <span> {{ date }} </span> </h4>
+                        </div>
+                        <br>
+                        {% if user.is_authenticated %}
+                            <h4 class="text-center" style="color:white"> Xin chào, {{ user.first_name }} </h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+{% endblock herosection %}
+
+{% block content %}
+    <!-- Classes Timetable Section Begin -->
+    <section class="classes-timetable spad">
+        <div class="container">
+            {% comment %} <div id="chartContainer" style="height: 370px; width: 100%;"></div> {% endcomment %}
+            <div class="row">
+                <div class="col-lg-12">
+                    {% comment %} <div class="section-title">
+                        <h2>Class Timetable</h2>
+                    </div> {% endcomment %}
+                    <div class="nav-controls">
+                        <ul>
+                            <li data-tsfilter="gym"> Sinh viên đi học: {{ total_present }}</li>
+                            <li data-tsfilter="gym"> Sinh viên vắng: {{ total_absent }}</li>
+                            <li data-tsfilter="gym"> Sĩ số lớp học: {{ total_student }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="schedule-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="">Stt</th>
+                                    <th>Mã số sinh viên</th>
+                                    <th>Họ và tên</th>
+                                    <th>Ngày tháng</th>
+                                    <th>Thời gian</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student_detail in table_attendance %}
+                                    <tr>
+                                        {% for student in student_detail %}
+                                            <td class="hover-bg ts-item" data-tsmeta="gym">
+                                                <div class="trainer-name" style="font-size:18px">
+                                                    {{ student }}
+                                                </div>
+                                                {% comment %} <span style="font-size:18px"> {{ student }} </span> {% endcomment %}
+                                            </td>
+                                        {% endfor %}
+                                    </tr>    
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Trainer Table Schedule Section End -->
+{% endblock %}
+
+{% comment %} {% block style %}
+    <style>
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-radius: 15px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #456aff;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script>
+        window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            {% comment %} title:{
+                text: "State Operating Funds"
+            }, {% endcomment %
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: [
+                    { y: {{ Statistical_total_present }}, name: "Tỉ lệ đã đi học", exploded: true },
+                    { y: {{ Statistical_total_absent }}, name: "Tỉ lệ đã vắng học" },
+                ]
+            }]
+        });
+        chart.render();
+        }
+
+        function explodePie (e) {
+            if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    </script>
+{% endblock %}
+
+
+{% block herosection %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb/classes-breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Điểm danh lớp học</h2>
+                        <div class="breadcrumb-option">
+                            <a href="{% url 'teachers:attendance_index' %}"><i class="fa fa-home"></i> Trang chủ</a>
+                            <span> Điểm danh lớp học </span>
+                        </div>
+                        <br>
+                        {% if user.is_authenticated %}
+                            <h4 class="text-center" style="color:white"> Xin chào, {{ user.first_name }} </h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+{% endblock herosection %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class = "container">
+            <h4 class="text-left"> Xin chào, {{ user.first_name }} </h4>
+        </div>
+        <div class="col-md-6 offset-md-3">
+            
+            <div class="text-center">
+                <caption>
+                    <h2 style="font-family: sans-serif; font-weight: bold;">
+                        {{ dept_name }}
+                    </h2>
+                    <h4>
+                        {{ sem_name }} - {{ date }}
+                    </h4>
+                </caption>
+            </div>
+
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            
+            <h2 align="center">
+                Sinh viên đi học: {{ total_present }} (sinh viên)<br/>
+                Sinh viên vắng: {{ total_absent }} (sinh viên)<br/>
+                Sĩ số lớp học: {{ total_student }} (sinh viên)<br/>
+                {% comment %} Buổi đã học: {{ length_lesson }} (buổi) {% endcomment %
+            </h2>
+
+            <table id="customers">
+                <tr>
+                    <th>Stt</th>
+                    <th>Mã số sinh viên</th>
+                    <th>Họ tên</th>
+                    <th>Ngày</th>
+                    <th>Thời gian</th>
+                    <th>Trạng thái</th>
+                </tr>
+                {% for student_detail in table_attendance %}
+                    <tr>
+                        {% for student in student_detail %}
+                            <td>{{ student }}</td>
+                        {% endfor %}
+                    </tr>    
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+    
+{% endblock %} {% endcomment %}

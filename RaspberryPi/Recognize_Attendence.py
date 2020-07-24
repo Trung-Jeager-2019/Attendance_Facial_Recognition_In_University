@@ -16,7 +16,7 @@ def recognizeAttendence(dept, sem):
     font = cv2.FONT_HERSHEY_SIMPLEX
     col_names = ['Id', 'Name', 'Date', 'Time']
     attendance = pd.DataFrame(columns = col_names)
-
+    find_accuracy = []
     while True:
         ret, im = cam.read()
         gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
